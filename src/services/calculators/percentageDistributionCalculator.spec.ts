@@ -1,13 +1,13 @@
 import BigNumber from 'bignumber.js'
 import { Coin } from 'models'
 import { coinDistributionProvider } from 'providers/coinDistributionProvider'
-import { coinDistributionCalculator } from './coinDistributionCalculator'
+import { percentageDistributionCalculator } from './percentageDistributionCalculator'
 
 jest.mock('providers/coinDistributionProvider')
 
 describe('Coin distribution calculator', () => {
   it('should get coin distribution from provider', () => {
-    coinDistributionCalculator()
+    percentageDistributionCalculator()
 
     expect(coinDistributionProvider).toBeCalledTimes(1)
   })
@@ -19,7 +19,7 @@ describe('Coin distribution calculator', () => {
       { coin: Coin.USDT, amount: new BigNumber('50000') },
     ])
 
-    const result = coinDistributionCalculator()
+    const result = percentageDistributionCalculator()
 
     expect(result).toEqual([
       { coin: Coin.DAI, percentage: new BigNumber('10') },
@@ -35,7 +35,7 @@ describe('Coin distribution calculator', () => {
       { coin: Coin.USDT, amount: new BigNumber('50000') },
     ])
 
-    const result = coinDistributionCalculator()
+    const result = percentageDistributionCalculator()
 
     expect(result).toEqual([
       { coin: Coin.DAI, percentage: new BigNumber('0') },
@@ -51,7 +51,7 @@ describe('Coin distribution calculator', () => {
       { coin: Coin.DAI, amount: new BigNumber('0') },
     ])
 
-    const result = coinDistributionCalculator()
+    const result = percentageDistributionCalculator()
 
     expect(result).toEqual([
       { coin: Coin.DAI, percentage: new BigNumber('0') },
