@@ -8,10 +8,8 @@ import {
   convexStrategyAllocation,
   compoundStrategyAllocation,
   mixedStrategyAllocation,
+  removeItemAtIndex,
 } from './utils'
-
-const removeItemAtIndex = <T>(index: number, array: Array<T>) =>
-  array.slice(0, index).concat(array.slice(index + 1, array.length))
 
 describe('APY Calculation service', () => {
   it('it should calculate APY for an Aave-only allocation', () => {
