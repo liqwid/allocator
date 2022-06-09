@@ -27,10 +27,10 @@ const validateCoinAllocation =
 
     const totalAllocation = sumBigNumberArray(strategyAllocations)
 
-    if (totalAllocation.isGreaterThan(100))
+    if (totalAllocation.isGreaterThan('100'))
       throw Error(`Allocation for coin ${coin} is >100%`)
 
-    if (totalAllocation.isLessThan(100))
+    if (totalAllocation.isLessThan('100'))
       throw Error(`Allocation for coin ${coin} is <100%`)
   }
 

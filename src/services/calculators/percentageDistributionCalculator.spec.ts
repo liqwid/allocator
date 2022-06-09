@@ -47,16 +47,16 @@ describe('Coin distribution calculator', () => {
   it('should calculate percentage distribution when one all amounts are 0', () => {
     ;(coinDistributionProvider as jest.Mock).mockImplementationOnce(() => [
       { coin: Coin.DAI, amount: new BigNumber('0') },
-      { coin: Coin.DAI, amount: new BigNumber('0') },
-      { coin: Coin.DAI, amount: new BigNumber('0') },
+      { coin: Coin.USDC, amount: new BigNumber('0') },
+      { coin: Coin.USDT, amount: new BigNumber('0') },
     ])
 
     const result = percentageDistributionCalculator()
 
     expect(result).toEqual([
       { coin: Coin.DAI, percentage: new BigNumber('0') },
-      { coin: Coin.DAI, percentage: new BigNumber('0') },
-      { coin: Coin.DAI, percentage: new BigNumber('0') },
+      { coin: Coin.USDC, percentage: new BigNumber('0') },
+      { coin: Coin.USDT, percentage: new BigNumber('0') },
     ])
   })
 })

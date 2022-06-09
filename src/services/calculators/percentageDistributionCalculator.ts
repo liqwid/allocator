@@ -11,7 +11,7 @@ export const percentageDistributionCalculator =
       coinDistributions.map(({ amount }) => amount),
     )
 
-    if (totalAmount.isEqualTo(0))
+    if (totalAmount.isEqualTo('0'))
       return coinDistributions.map(({ coin }) => ({
         coin,
         percentage: new BigNumber('0'),
