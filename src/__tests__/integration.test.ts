@@ -3,10 +3,12 @@ import { keyBy, groupBy, pipe, mapValues } from 'lodash/fp'
 
 import { calculateAPY } from 'Controller'
 import { Coin, WeightedAPY } from 'models'
-import { compoundStrategyAllocation } from './compoundStrategy'
-import { aaveStrategyAllocation } from './aaveStrategy'
-import { convexStrategyAllocation } from './convexStrategy'
-import { mixedStrategyAllocation } from './mixedStrategy'
+import {
+  aaveStrategyAllocation,
+  convexStrategyAllocation,
+  compoundStrategyAllocation,
+  mixedStrategyAllocation,
+} from './utils'
 
 const removeItemAtIndex = <T>(index: number, array: Array<T>) =>
   array.slice(0, index).concat(array.slice(index + 1, array.length))
