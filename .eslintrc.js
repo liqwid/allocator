@@ -1,5 +1,3 @@
-const prettierConfig = require('./.prettierrc.js')
-
 module.exports = {
   env: {
     commonjs: true,
