@@ -14,94 +14,114 @@ import {
 describe('APY Calculation service', () => {
   it('it should calculate APY for an Aave-only allocation', () => {
     const { projectedAPY, weightedAPYs } = calculateAPY(aaveStrategyAllocation)
-    expect(new BigNumber('2.83')).toBe(projectedAPY.decimalPlaces(2))
+    expect(new BigNumber('2.83')).toEqual(projectedAPY.decimalPlaces(2))
 
     const { Aave, Compound, Convex } = pipe(
       groupBy('strategy'),
       mapValues(keyBy<WeightedAPY>('coin')),
     )(weightedAPYs)
 
-    expect(new BigNumber('1.13')).toBe(Aave[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0.88')).toBe(Aave[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('0.82')).toBe(Aave[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('1.13')).toEqual(Aave[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('0.88')).toEqual(Aave[Coin.USDC].APY.decimalPlaces(2))
+    expect(new BigNumber('0.82')).toEqual(Aave[Coin.USDT].APY.decimalPlaces(2))
 
-    expect(new BigNumber('0')).toBe(Compound[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Compound[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Compound[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Compound[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Compound[Coin.USDC].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Compound[Coin.USDT].APY.decimalPlaces(2))
 
-    expect(new BigNumber('0')).toBe(Convex[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Convex[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Convex[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Convex[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Convex[Coin.USDC].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Convex[Coin.USDT].APY.decimalPlaces(2))
   })
 
   it('it should calculate APY for a Compound-only allocation', () => {
     const { projectedAPY, weightedAPYs } = calculateAPY(
       compoundStrategyAllocation,
     )
-    expect(new BigNumber('3.25')).toBe(projectedAPY.decimalPlaces(2))
+    expect(new BigNumber('3.25')).toEqual(projectedAPY.decimalPlaces(2))
 
     const { Aave, Compound, Convex } = pipe(
       groupBy('strategy'),
       mapValues(keyBy<WeightedAPY>('coin')),
     )(weightedAPYs)
 
-    expect(new BigNumber('0')).toBe(Aave[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Aave[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Aave[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Aave[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Aave[Coin.USDC].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Aave[Coin.USDT].APY.decimalPlaces(2))
 
-    expect(new BigNumber('1.26')).toBe(Compound[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0.96')).toBe(Compound[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('1.03')).toBe(Compound[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('1.26')).toEqual(
+      Compound[Coin.DAI].APY.decimalPlaces(2),
+    )
+    expect(new BigNumber('0.96')).toEqual(
+      Compound[Coin.USDC].APY.decimalPlaces(2),
+    )
+    expect(new BigNumber('1.03')).toEqual(
+      Compound[Coin.USDT].APY.decimalPlaces(2),
+    )
 
-    expect(new BigNumber('0')).toBe(Convex[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Convex[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Convex[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Convex[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Convex[Coin.USDC].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Convex[Coin.USDT].APY.decimalPlaces(2))
   })
 
   it('it should calculate APY for a Convex-only allocation', () => {
     const { projectedAPY, weightedAPYs } = calculateAPY(
       convexStrategyAllocation,
     )
-    expect(new BigNumber('3.25')).toBe(projectedAPY.decimalPlaces(2))
+    expect(new BigNumber('3.25')).toEqual(projectedAPY.decimalPlaces(2))
 
     const { Aave, Compound, Convex } = pipe(
       groupBy('strategy'),
       mapValues(keyBy<WeightedAPY>('coin')),
     )(weightedAPYs)
 
-    expect(new BigNumber('0')).toBe(Aave[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Aave[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Aave[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Aave[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Aave[Coin.USDC].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Aave[Coin.USDT].APY.decimalPlaces(2))
 
-    expect(new BigNumber('0')).toBe(Compound[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Compound[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('0')).toBe(Compound[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Compound[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Compound[Coin.USDC].APY.decimalPlaces(2))
+    expect(new BigNumber('0')).toEqual(Compound[Coin.USDT].APY.decimalPlaces(2))
 
-    expect(new BigNumber('0.85')).toBe(Convex[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0.85')).toBe(Convex[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('0.85')).toBe(Convex[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('0.85')).toEqual(Convex[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('0.85')).toEqual(
+      Convex[Coin.USDC].APY.decimalPlaces(2),
+    )
+    expect(new BigNumber('0.85')).toEqual(
+      Convex[Coin.USDT].APY.decimalPlaces(2),
+    )
   })
 
   it('it should calculate APY for a mixed allocation', () => {
     const { projectedAPY, weightedAPYs } = calculateAPY(mixedStrategyAllocation)
-    expect(new BigNumber('2.78')).toBe(projectedAPY.decimalPlaces(2))
+    expect(new BigNumber('2.78')).toEqual(projectedAPY.decimalPlaces(2))
 
     const { Aave, Compound, Convex } = pipe(
       groupBy('strategy'),
       mapValues(keyBy<WeightedAPY>('coin')),
     )(weightedAPYs)
 
-    expect(new BigNumber('0.34')).toBe(Aave[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0.44')).toBe(Aave[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('0.66')).toBe(Aave[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('0.34')).toEqual(Aave[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('0.44')).toEqual(Aave[Coin.USDC].APY.decimalPlaces(2))
+    expect(new BigNumber('0.66')).toEqual(Aave[Coin.USDT].APY.decimalPlaces(2))
 
-    expect(new BigNumber('0.25')).toBe(Compound[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0.1')).toBe(Compound[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('0.02')).toBe(Compound[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('0.25')).toEqual(
+      Compound[Coin.DAI].APY.decimalPlaces(2),
+    )
+    expect(new BigNumber('0.1')).toEqual(
+      Compound[Coin.USDC].APY.decimalPlaces(2),
+    )
+    expect(new BigNumber('0.02')).toEqual(
+      Compound[Coin.USDT].APY.decimalPlaces(2),
+    )
 
-    expect(new BigNumber('0.33')).toBe(Convex[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0.33')).toBe(Convex[Coin.USDC].APY.decimalPlaces(2))
-    expect(new BigNumber('0.33')).toBe(Convex[Coin.USDT].APY.decimalPlaces(2))
+    expect(new BigNumber('0.33')).toEqual(Convex[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('0.33')).toEqual(
+      Convex[Coin.USDC].APY.decimalPlaces(2),
+    )
+    expect(new BigNumber('0.33')).toEqual(
+      Convex[Coin.USDT].APY.decimalPlaces(2),
+    )
   })
 
   it('it should throw an error if any coin/allocation strategy is missing are allocated', () => {

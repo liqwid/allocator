@@ -4,7 +4,7 @@ import { requestAllocationValidator } from './requestAllocationValidator'
 
 describe('request allocation validator', () => {
   it('it should not throw errors if all coins strategies are provided and each coin sums to total 100% allocation', () => {
-    expect(() => requestAllocationValidator(mixedStrategyAllocation)).toReturn()
+    requestAllocationValidator(mixedStrategyAllocation)
   })
 
   it('it should throw error if any coin/strategy allocation pair is missed', () => {
