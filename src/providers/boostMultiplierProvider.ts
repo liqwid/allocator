@@ -1,5 +1,5 @@
+import { boostMultiplierClient } from 'clients/boostMultiplierClient'
 import { BoostMultiplier } from 'models'
 
-export const boostMultiplierProvider = (): BoostMultiplier => {
-  throw Error('Not implemented')
-}
+export const boostMultiplierProvider = (): BoostMultiplier =>
+  boostMultiplierClient()

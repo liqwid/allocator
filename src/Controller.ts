@@ -14,11 +14,11 @@ export const calculateAPY = (
 
   const coinDistribution = coinDistributionProvider()
 
-  const strategyAPYs = strategyAllocations.flatMap((allocation) => {
+  const strategyAPYs = strategyAllocations.flatMap(({ coin, strategy }) => {
     const allAPYTypes = Object.values(APYType)
 
-    return allAPYTypes.map((APYType) =>
-      strategyAPYCalculator(allocation, APYType),
+    return allAPYTypes.map((type) =>
+      strategyAPYCalculator({ coin, strategy, type }),
     )
   })
 

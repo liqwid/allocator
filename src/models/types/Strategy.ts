@@ -3,3 +3,5 @@ export enum Strategy {
   Convex = 'Convex',
   Aave = 'Aave',
 }
+
+export const allStrategies = Object.values(Strategy)

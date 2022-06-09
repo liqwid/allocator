@@ -1,9 +1,9 @@
 import { APYType, Coin, Strategy, StrategyCoinAPY } from 'models'
-import { getMockAPY } from './getMockAPY'
+import { getMockAPY } from 'utils/getMockAPY'
 
 const strategy = Strategy.Compound
 
-export const compundAPYClient = (
+export const compoundAPYClient = (
   coin: Coin,
   type: APYType,
 ): StrategyCoinAPY => {

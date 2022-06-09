@@ -1,5 +1,6 @@
-import { CoinDistribution } from 'models'
+import BigNumber from 'bignumber.js'
+import { Coin, CoinDistribution } from 'models'
 
 export const DAIAllocationClient = (): CoinDistribution => {
-  throw Error('Not implemented')
+  return { coin: Coin.DAI, amount: new BigNumber('23_512_695') }
 }

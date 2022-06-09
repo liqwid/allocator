@@ -1,5 +1,6 @@
-import { CoinDistribution } from 'models'
+import BigNumber from 'bignumber.js'
+import { Coin, CoinDistribution } from 'models'
 
 export const USDCAllocationClient = (): CoinDistribution => {
-  throw Error('Not implemented')
+  return { coin: Coin.USDC, amount: new BigNumber('28_746_090') }
 }

@@ -1,10 +1,13 @@
 import { Dictionary } from 'lodash'
 import { groupBy, keyBy, mapValues, pipe } from 'lodash/fp'
-import { Coin, Strategy, StrategyCoinAllocation } from 'models'
+import {
+  allCoins,
+  allStrategies,
+  Coin,
+  Strategy,
+  StrategyCoinAllocation,
+} from 'models'
 import { sumBigNumberArray } from 'utils'
-
-const allCoins = Object.values(Coin)
-const allStrategies = Object.values(Strategy)
 
 export const requestAllocationValidator = (
   strategyAllocations: StrategyCoinAllocation[],

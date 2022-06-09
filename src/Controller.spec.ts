@@ -1,7 +1,12 @@
 import BigNumber from 'bignumber.js'
 
 import { calculateAPY } from 'Controller'
-import { APYType, CoinDistribution, StrategyCoinAPY, WeightedAPY } from 'models'
+import {
+  allAPYTypes,
+  CoinDistribution,
+  StrategyCoinAPY,
+  WeightedAPY,
+} from 'models'
 import { requestAllocationValidator } from 'services/validators/requestAllocationValidator'
 import { projectedAPYCalculator } from 'services/calculators/projectedAPYCalculator'
 import { strategyAPYCalculator } from 'services/calculators/strategyAPYCalculator'
@@ -45,16 +50,18 @@ describe('APY Calculation Controller', () => {
   })
 
   it('it should call strategy APY calculator for each of allocated coin/strategy and for each APY types', () => {
-    const allAPYTypes = Object.values(APYType)
-
     calculateAPY(mixedStrategyAllocation)
 
     expect(strategyAPYCalculator).toHaveBeenCalledTimes(
       mixedStrategyAllocation.length * allAPYTypes.length,
     )
-    mixedStrategyAllocation.forEach((allocation) => {
-      allAPYTypes.forEach((APYType) => {
-        expect(strategyAPYCalculator).toHaveBeenCalledWith(allocation, APYType)
+    mixedStrategyAllocation.forEach(({ coin, strategy }) => {
+      allAPYTypes.forEach((type) => {
+        expect(strategyAPYCalculator).toHaveBeenCalledWith({
+          coin,
+          strategy,
+          type,
+        })
       })
     })
   })

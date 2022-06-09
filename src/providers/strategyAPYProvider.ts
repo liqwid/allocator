@@ -1,5 +1,19 @@
-import { APYKey, StrategyCoinAPY } from 'models'
+import { aaveAPYClient } from 'clients/strategyAPY/aaveAPYClient'
+import { compoundAPYClient } from 'clients/strategyAPY/compoundAPYClient'
+import { convexAPYClient } from 'clients/strategyAPY/convexAPYClient'
+import { APYKey, Strategy, StrategyCoinAPY } from 'models'
 
-export const strategyAPYProvider = (request: APYKey): StrategyCoinAPY => {
-  throw Error(`Not implemented ${request}`)
+const APYClients = {
+  [Strategy.Aave]: aaveAPYClient,
+  [Strategy.Compound]: compoundAPYClient,
+  [Strategy.Convex]: convexAPYClient,
+}
+
+export const strategyAPYProvider = ({
+  strategy,
+  coin,
+  type,
+}: APYKey): StrategyCoinAPY => {
+  const client = APYClients[strategy]
+  return client(coin, type)
 }

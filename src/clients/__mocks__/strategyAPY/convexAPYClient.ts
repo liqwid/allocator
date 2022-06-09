@@ -1,5 +1,5 @@
 import { APYType, Coin, Strategy, StrategyCoinAPY } from 'models'
-import { getMockAPY } from './getMockAPY'
+import { getMockAPY } from 'utils/getMockAPY'
 
 const strategy = Strategy.Convex
 
