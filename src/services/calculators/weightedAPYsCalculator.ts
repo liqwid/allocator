@@ -1,16 +1,12 @@
-import {
-  CoinPercentageDistribution,
-  StrategyCoinAllocation,
-  StrategyCoinAPY,
-} from 'models'
+import { StrategyCoinAPY } from 'models'
+import { TotalValueAllocation } from 'models/TotalValueAllocation'
 import { WeightedAPY } from 'models/WieghtedAPY'
 
 export const weightedAPYsCalculator = (
-  coinDistribution: CoinPercentageDistribution[],
-  strategyAllocations: StrategyCoinAllocation[],
+  totalValueAllocations: TotalValueAllocation[],
   strategyAPYs: StrategyCoinAPY[],
 ): WeightedAPY[] => {
   throw Error(
-    `weightedAPYsCalculator Not implemented ${coinDistribution} ${strategyAllocations} ${strategyAPYs}`,
+    `weightedAPYsCalculator Not implemented ${totalValueAllocations} ${strategyAPYs}`,
   )
 }

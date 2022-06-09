@@ -4,7 +4,7 @@ import { calculateAPY } from 'Controller'
 import {
   allAPYTypes,
   BoostMultiplier,
-  CoinDistribution,
+  CoinPercentageDistribution,
   StrategyCoinAPY,
   WeightedAPY,
 } from 'models'
@@ -16,12 +16,15 @@ import { weightedAPYsCalculator } from 'services/calculators/weightedAPYsCalcula
 import { mixedStrategyAllocation } from '__tests__/utils'
 import { boostMultiplierProvider } from 'providers/boostMultiplierProvider'
 import { percentageDistributionCalculator } from 'services/calculators/percentageDistributionCalculator'
+import { totalAllocationCalculator } from 'services/calculators/totalAllocationCalculator'
+import { TotalValueAllocation } from 'models/TotalValueAllocation'
 
 jest.mock('services/validators/requestAllocationValidator')
 jest.mock('services/calculators/projectedAPYCalculator')
 jest.mock('services/calculators/strategyAPYCalculator')
+jest.mock('services/calculators/totalAllocationCalculator')
 jest.mock('services/calculators/weightedAPYsCalculator')
-jest.mock('services/calculators/coinDistributionCalculator')
+jest.mock('services/calculators/percentageDistributionCalculator')
 jest.mock('providers/boostMultiplierProvider')
 
 describe('APY Calculation Controller', () => {
@@ -46,18 +49,18 @@ describe('APY Calculation Controller', () => {
     )
   })
 
-  it('should call coin distribution calculator', () => {
+  it('should get coin distribution from calculator', () => {
     calculateAPY(mixedStrategyAllocation)
 
     expect(percentageDistributionCalculator).toHaveBeenCalledTimes(1)
   })
 
-  it('should call boost multiplier provider', () => {
+  it('should get boost multiplier from provider', () => {
     calculateAPY(mixedStrategyAllocation)
     expect(boostMultiplierProvider).toHaveBeenCalledTimes(1)
   })
 
-  it('should call strategy APY calculator for each of allocated coin/strategy and for each APY types', () => {
+  it('should calculate strategy APY for each of allocated coin/strategy and for each APY types', () => {
     calculateAPY(mixedStrategyAllocation)
 
     const boostMultiplier = (
@@ -81,25 +84,38 @@ describe('APY Calculation Controller', () => {
     })
   })
 
-  it('should call weighted APY calculator with the result of coin distribution provider, strategy APYs calculator call and strategy allocations', () => {
+  it('should calculate total value allocation with the inter-coin allocation strategy and coin distribution', () => {
     calculateAPY(mixedStrategyAllocation)
 
     const coinDistribution = (
       percentageDistributionCalculator as jest.Mock
-    ).mock.results.map(({ value }) => value as CoinDistribution[])[0]
+    ).mock.results.map(({ value }) => value as CoinPercentageDistribution[])[0]
+
+    expect(totalAllocationCalculator).toHaveBeenCalledTimes(1)
+    expect(totalAllocationCalculator).toHaveBeenCalledWith(
+      coinDistribution,
+      mixedStrategyAllocation,
+    )
+  })
+
+  it('should calculate weighted APY with the result of total value allocation and strategy APYs', () => {
+    calculateAPY(mixedStrategyAllocation)
+
+    const totalValueAllocations = (
+      totalAllocationCalculator as jest.Mock
+    ).mock.results.map(({ value }) => value as TotalValueAllocation[])[0]
     const strategyAPYs = (strategyAPYCalculator as jest.Mock).mock.results.map(
       ({ value }) => value as StrategyCoinAPY,
     )
 
     expect(weightedAPYsCalculator).toHaveBeenCalledTimes(1)
     expect(weightedAPYsCalculator).toHaveBeenCalledWith(
-      coinDistribution,
-      mixedStrategyAllocation,
+      totalValueAllocations,
       strategyAPYs,
     )
   })
 
-  it('should call projectedAPY calculator with result of weighted APYs calculator', () => {
+  it('should calculate projectedAPY with result of weighted APYs calculator', () => {
     calculateAPY(mixedStrategyAllocation)
 
     const weightedAPYs = (weightedAPYsCalculator as jest.Mock).mock.results.map(

@@ -1,15 +1,16 @@
 import { APYType } from 'models'
 import { CalculateAPYResult } from 'models/CalculateAPYResult'
-import { StrategyCoinAllocation } from 'models/StrategyCoinAllocation'
+import { CoinAllocation } from 'models/CoinAllocation'
 import { boostMultiplierProvider } from 'providers/boostMultiplierProvider'
 import { percentageDistributionCalculator } from 'services/calculators/percentageDistributionCalculator'
 import { projectedAPYCalculator } from 'services/calculators/projectedAPYCalculator'
 import { strategyAPYCalculator } from 'services/calculators/strategyAPYCalculator'
+import { totalAllocationCalculator } from 'services/calculators/totalAllocationCalculator'
 import { weightedAPYsCalculator } from 'services/calculators/weightedAPYsCalculator'
 import { requestAllocationValidator } from 'services/validators/requestAllocationValidator'
 
 export const calculateAPY = (
-  strategyAllocations: StrategyCoinAllocation[],
+  strategyAllocations: CoinAllocation[],
 ): CalculateAPYResult => {
   requestAllocationValidator(strategyAllocations)
 
@@ -25,9 +26,13 @@ export const calculateAPY = (
     )
   })
 
-  const weightedAPYs = weightedAPYsCalculator(
+  const totalValueAllocations = totalAllocationCalculator(
     coinDistribution,
     strategyAllocations,
+  )
+
+  const weightedAPYs = weightedAPYsCalculator(
+    totalValueAllocations,
     strategyAPYs,
   )
 

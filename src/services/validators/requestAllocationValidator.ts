@@ -1,27 +1,21 @@
 import { Dictionary } from 'lodash'
 import { groupBy, keyBy, mapValues, pipe } from 'lodash/fp'
-import {
-  allCoins,
-  allStrategies,
-  Coin,
-  Strategy,
-  StrategyCoinAllocation,
-} from 'models'
+import { allCoins, allStrategies, Coin, Strategy, CoinAllocation } from 'models'
 import { sumBigNumberArray } from 'utils'
 
 export const requestAllocationValidator = (
-  strategyAllocations: StrategyCoinAllocation[],
+  strategyAllocations: CoinAllocation[],
 ): void => {
   const groupedAllocations = pipe(
     groupBy('coin'),
-    mapValues(keyBy<StrategyCoinAllocation>('strategy')),
+    mapValues(keyBy<CoinAllocation>('strategy')),
   )(strategyAllocations)
 
   allCoins.forEach(validateCoinAllocation(groupedAllocations))
 }
 
 const validateCoinAllocation =
-  (groupedAllocations: Dictionary<Dictionary<StrategyCoinAllocation>>) =>
+  (groupedAllocations: Dictionary<Dictionary<CoinAllocation>>) =>
   (coin: Coin) => {
     const coinAllocation = groupedAllocations[coin]
 
@@ -41,7 +35,7 @@ const validateCoinAllocation =
   }
 
 const getStrategyAllocationPercentage =
-  (coin: Coin, coinAllocation: Dictionary<StrategyCoinAllocation>) =>
+  (coin: Coin, coinAllocation: Dictionary<CoinAllocation>) =>
   (strategy: Strategy) => {
     const strategyAllocation = coinAllocation[strategy]
     if (!strategyAllocation)
