@@ -1,6 +1,7 @@
 import { APYType } from 'models'
 import { CalculateAPYResult } from 'models/CalculateAPYResult'
 import { StrategyCoinAllocation } from 'models/StrategyCoinAllocation'
+import { boostMultiplierProvider } from 'providers/boostMultiplierProvider'
 import { coinDistributionProvider } from 'providers/coinDistributionProvider'
 import { projectedAPYCalculator } from 'services/calculators/projectedAPYCalculator'
 import { strategyAPYCalculator } from 'services/calculators/strategyAPYCalculator'
@@ -14,11 +15,13 @@ export const calculateAPY = (
 
   const coinDistribution = coinDistributionProvider()
 
+  const boostMultiplier = boostMultiplierProvider()
+
   const strategyAPYs = strategyAllocations.flatMap(({ coin, strategy }) => {
     const allAPYTypes = Object.values(APYType)
 
     return allAPYTypes.map((type) =>
-      strategyAPYCalculator({ coin, strategy, type }),
+      strategyAPYCalculator({ coin, strategy, type }, boostMultiplier),
     )
   })
 

@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js'
 import { calculateAPY } from 'Controller'
 import {
   allAPYTypes,
+  BoostMultiplier,
   CoinDistribution,
   StrategyCoinAPY,
   WeightedAPY,
@@ -14,12 +15,14 @@ import { weightedAPYsCalculator } from 'services/calculators/weightedAPYsCalcula
 import { coinDistributionProvider } from 'providers/coinDistributionProvider'
 
 import { mixedStrategyAllocation } from '__tests__/utils'
+import { boostMultiplierProvider } from 'providers/boostMultiplierProvider'
 
 jest.mock('services/validators/requestAllocationValidator')
 jest.mock('services/calculators/projectedAPYCalculator')
 jest.mock('services/calculators/strategyAPYCalculator')
 jest.mock('services/calculators/weightedAPYsCalculator')
 jest.mock('providers/coinDistributionProvider')
+jest.mock('providers/boostMultiplierProvider')
 
 describe('APY Calculation Controller', () => {
   beforeEach(() => {
@@ -49,19 +52,31 @@ describe('APY Calculation Controller', () => {
     expect(coinDistributionProvider).toHaveBeenCalledTimes(1)
   })
 
+  it('should call boost multiplier provider', () => {
+    calculateAPY(mixedStrategyAllocation)
+    expect(boostMultiplierProvider).toHaveBeenCalledTimes(1)
+  })
+
   it('it should call strategy APY calculator for each of allocated coin/strategy and for each APY types', () => {
     calculateAPY(mixedStrategyAllocation)
+
+    const boostMultiplier = (
+      boostMultiplierProvider as jest.Mock
+    ).mock.results.map(({ value }) => value as BoostMultiplier)[0]
 
     expect(strategyAPYCalculator).toHaveBeenCalledTimes(
       mixedStrategyAllocation.length * allAPYTypes.length,
     )
     mixedStrategyAllocation.forEach(({ coin, strategy }) => {
       allAPYTypes.forEach((type) => {
-        expect(strategyAPYCalculator).toHaveBeenCalledWith({
-          coin,
-          strategy,
-          type,
-        })
+        expect(strategyAPYCalculator).toHaveBeenCalledWith(
+          {
+            coin,
+            strategy,
+            type,
+          },
+          boostMultiplier,
+        )
       })
     })
   })
