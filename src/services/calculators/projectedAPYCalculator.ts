@@ -1,8 +1,9 @@
 import BigNumber from 'bignumber.js'
 import { WeightedAPY } from 'models/WieghtedAPY'
+import { sumBigNumberArray } from 'utils'
 
 export const projectedAPYCalculator = (
   wieghtedAPYs: WeightedAPY[],
 ): BigNumber => {
-  throw Error(`projectedAPYCalculator not implemented ${wieghtedAPYs}`)
+  return sumBigNumberArray(wieghtedAPYs.map(({ APY }) => APY))
 }
