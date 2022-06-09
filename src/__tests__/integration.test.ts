@@ -12,7 +12,7 @@ import {
 } from './utils'
 
 describe('APY Calculation service', () => {
-  it('it should calculate APY for an Aave-only allocation', () => {
+  it('should calculate APY for an Aave-only allocation', () => {
     const { projectedAPY, weightedAPYs } = calculateAPY(aaveStrategyAllocation)
     expect(new BigNumber('2.83')).toEqual(projectedAPY.decimalPlaces(2))
 
@@ -34,7 +34,7 @@ describe('APY Calculation service', () => {
     expect(new BigNumber('0')).toEqual(Convex[Coin.USDT].APY.decimalPlaces(2))
   })
 
-  it('it should calculate APY for a Compound-only allocation', () => {
+  it('should calculate APY for a Compound-only allocation', () => {
     const { projectedAPY, weightedAPYs } = calculateAPY(
       compoundStrategyAllocation,
     )
@@ -64,7 +64,7 @@ describe('APY Calculation service', () => {
     expect(new BigNumber('0')).toEqual(Convex[Coin.USDT].APY.decimalPlaces(2))
   })
 
-  it('it should calculate APY for a Convex-only allocation', () => {
+  it('should calculate APY for a Convex-only allocation', () => {
     const { projectedAPY, weightedAPYs } = calculateAPY(
       convexStrategyAllocation,
     )
@@ -92,7 +92,7 @@ describe('APY Calculation service', () => {
     )
   })
 
-  it('it should calculate APY for a mixed allocation', () => {
+  it('should calculate APY for a mixed allocation', () => {
     const { projectedAPY, weightedAPYs } = calculateAPY(mixedStrategyAllocation)
     expect(new BigNumber('2.78')).toEqual(projectedAPY.decimalPlaces(2))
 
@@ -124,7 +124,7 @@ describe('APY Calculation service', () => {
     )
   })
 
-  it('it should throw an error if any coin/allocation strategy is missing are allocated', () => {
+  it('should throw an error if any coin/allocation strategy is missing are allocated', () => {
     Array(9)
       .fill(undefined)
       .forEach((_, index) => {
@@ -140,7 +140,7 @@ describe('APY Calculation service', () => {
       })
   })
 
-  it('it should throw an error if any of the coins allocation is > 100%', () => {
+  it('should throw an error if any of the coins allocation is > 100%', () => {
     Object.values(Coin).forEach((overflowCoin) => {
       const overflowAllocation = mixedStrategyAllocation.map((allocation) =>
         allocation.coin === overflowCoin
@@ -157,7 +157,7 @@ describe('APY Calculation service', () => {
     })
   })
 
-  it('it should throw an error if any of the coins allocation is < 100%', () => {
+  it('should throw an error if any of the coins allocation is < 100%', () => {
     Object.values(Coin).forEach((overflowCoin) => {
       const overflowAllocation = mixedStrategyAllocation.map((allocation) =>
         allocation.coin === overflowCoin

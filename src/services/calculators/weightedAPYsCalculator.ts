@@ -1,12 +1,12 @@
 import {
-  CoinDistribution,
+  CoinPercentageDistribution,
   StrategyCoinAllocation,
   StrategyCoinAPY,
 } from 'models'
 import { WeightedAPY } from 'models/WieghtedAPY'
 
 export const weightedAPYsCalculator = (
-  coinDistribution: CoinDistribution[],
+  coinDistribution: CoinPercentageDistribution[],
   strategyAllocations: StrategyCoinAllocation[],
   strategyAPYs: StrategyCoinAPY[],
 ): WeightedAPY[] => {

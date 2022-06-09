@@ -3,11 +3,11 @@ import { mixedStrategyAllocation, removeItemAtIndex } from '__tests__/utils'
 import { requestAllocationValidator } from './requestAllocationValidator'
 
 describe('request allocation validator', () => {
-  it('it should not throw errors if all coins strategies are provided and each coin sums to total 100% allocation', () => {
+  it('should not throw errors if all coins strategies are provided and each coin sums to total 100% allocation', () => {
     requestAllocationValidator(mixedStrategyAllocation)
   })
 
-  it('it should throw error if any coin/strategy allocation pair is missed', () => {
+  it('should throw error if any coin/strategy allocation pair is missed', () => {
     Array(9)
       .fill(undefined)
       .forEach((_, index) => {
@@ -23,7 +23,7 @@ describe('request allocation validator', () => {
       })
   })
 
-  it('it should throw error if total allocation of any coin is <100%', () => {
+  it('should throw error if total allocation of any coin is <100%', () => {
     Object.values(Coin).forEach((overflowCoin) => {
       const overflowAllocation = mixedStrategyAllocation.map((allocation) =>
         allocation.coin === overflowCoin
@@ -40,7 +40,7 @@ describe('request allocation validator', () => {
     })
   })
 
-  it('it should throw error if total allocation of any coin is >100% ', () => {
+  it('should throw error if total allocation of any coin is >100% ', () => {
     Object.values(Coin).forEach((overflowCoin) => {
       const overflowAllocation = mixedStrategyAllocation.map((allocation) =>
         allocation.coin === overflowCoin

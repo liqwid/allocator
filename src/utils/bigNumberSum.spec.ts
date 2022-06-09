@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import { bigNumberSum, sumBigNumberArray } from './bigNumberSum'
 
 describe('big number summing', () => {
-  it('it should return sum of 2 big numbers', () => {
+  it('should return sum of 2 big numbers', () => {
     const a = new BigNumber('1234.1234')
     const b = new BigNumber('4321.4321')
 
@@ -11,7 +11,7 @@ describe('big number summing', () => {
 })
 
 describe('big number array sum', () => {
-  it('it should return array sum', () => {
+  it('should return array sum', () => {
     expect(
       sumBigNumberArray([
         new BigNumber('0'),
@@ -24,7 +24,7 @@ describe('big number array sum', () => {
     ).toEqual(new BigNumber('12'))
   })
 
-  it('it should return 0 if array is empty', () => {
+  it('should return 0 if array is empty', () => {
     expect(sumBigNumberArray([])).toEqual(new BigNumber('0'))
   })
 })

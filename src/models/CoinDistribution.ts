@@ -5,3 +5,8 @@ export interface CoinDistribution {
   coin: Coin
   amount: BigNumber
 }
+
+export interface CoinPercentageDistribution {
+  coin: Coin
+  percentage: BigNumber
+}
