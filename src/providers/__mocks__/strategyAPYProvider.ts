@@ -9,11 +9,9 @@ const APYClients = {
   [Strategy.Convex]: convexAPYClient,
 }
 
-export const strategyAPYProvider = ({
-  strategy,
-  coin,
-  type,
-}: APYKey): StrategyCoinAPY => {
-  const client = APYClients[strategy]
-  return client(coin, type)
-}
+export const strategyAPYProvider = jest.fn(
+  ({ strategy, coin, type }: APYKey): StrategyCoinAPY => {
+    const client = APYClients[strategy]
+    return client(coin, type)
+  },
+)

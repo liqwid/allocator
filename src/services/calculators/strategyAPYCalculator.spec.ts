@@ -12,6 +12,8 @@ describe('strategy APY calculator', () => {
     allCoins.forEach((coin) => {
       allStrategies.forEach((strategy) => {
         allAPYTypes.forEach((type) => {
+          ;(boostMultiplierProvider as jest.Mock).mockClear()
+
           strategyAPYCalculator({
             coin,
             strategy,
@@ -19,7 +21,6 @@ describe('strategy APY calculator', () => {
           })
 
           expect(boostMultiplierProvider).toHaveBeenCalledTimes(1)
-          ;(boostMultiplierProvider as jest.Mock).mockClear()
         })
       })
     })
@@ -29,6 +30,8 @@ describe('strategy APY calculator', () => {
     allCoins.forEach((coin) => {
       allStrategies.forEach((strategy) => {
         allAPYTypes.forEach((type) => {
+          ;(strategyAPYProvider as jest.Mock).mockClear()
+
           strategyAPYCalculator({
             coin,
             strategy,
@@ -41,7 +44,6 @@ describe('strategy APY calculator', () => {
             strategy,
             type,
           })
-          ;(strategyAPYProvider as jest.Mock).mockClear()
         })
       })
     })
@@ -54,7 +56,7 @@ describe('strategy APY calculator', () => {
           const boostMultiplier = new BigNumber(1.9)
           const strategyAPY = new BigNumber(Math.random())
           ;(boostMultiplierProvider as jest.Mock).mockImplementationOnce(() => {
-            return boostMultiplier
+            return { amount: boostMultiplier }
           })
           ;(strategyAPYProvider as jest.Mock).mockImplementationOnce(
             (key: APYKey) => {
