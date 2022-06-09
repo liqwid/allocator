@@ -1,6 +1,6 @@
 export * from './APYKey'
 export * from './BoostMultiplier'
-export * from './CoinAllocation'
+export * from './CoinDistribution'
 export * from './StrategyCoinAllocation'
 export * from './StrategyCoinAPY'
 export * from './WieghtedAPY'
