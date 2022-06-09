@@ -14,7 +14,7 @@ export const calculateAPY = (
 ): CalculateAPYResult => {
   requestAllocationValidator(strategyAllocations)
 
-  const coinDistribution = percentageDistributionCalculator()
+  const coinPercentageDistribution = percentageDistributionCalculator()
 
   const boostMultiplier = boostMultiplierProvider()
 
@@ -27,7 +27,7 @@ export const calculateAPY = (
   })
 
   const totalValueAllocations = totalAllocationCalculator(
-    coinDistribution,
+    coinPercentageDistribution,
     strategyAllocations,
   )
 
