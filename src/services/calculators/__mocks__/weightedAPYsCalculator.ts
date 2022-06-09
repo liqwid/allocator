@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import { Coin, Strategy } from 'models'
 import { WeightedAPY } from 'models/WieghtedAPY'
 
-export const weightedAPYsCalculator = (): WeightedAPY[] => {
+export const weightedAPYsCalculator = jest.fn((): WeightedAPY[] => {
   return [
     { coin: Coin.DAI, strategy: Strategy.Aave, APY: new BigNumber('0.011') },
     { coin: Coin.USDC, strategy: Strategy.Aave, APY: new BigNumber('0.012') },
@@ -26,4 +26,4 @@ export const weightedAPYsCalculator = (): WeightedAPY[] => {
     { coin: Coin.USDC, strategy: Strategy.Convex, APY: new BigNumber('0.032') },
     { coin: Coin.USDT, strategy: Strategy.Convex, APY: new BigNumber('0.033') },
   ]
-}
+})

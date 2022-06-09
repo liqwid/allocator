@@ -4,5 +4,5 @@ import { WeightedAPY } from 'models/WieghtedAPY'
 export const projectedAPYCalculator = (
   wieghtedAPYs: WeightedAPY[],
 ): BigNumber => {
-  throw Error(`Not implemented ${wieghtedAPYs}`)
+  throw Error(`projectedAPYCalculator not implemented ${wieghtedAPYs}`)
 }

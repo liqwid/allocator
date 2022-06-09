@@ -11,6 +11,6 @@ export const weightedAPYsCalculator = (
   strategyAPYs: StrategyCoinAPY[],
 ): WeightedAPY[] => {
   throw Error(
-    `Not implemented ${coinDistribution} ${strategyAllocations} ${strategyAPYs}`,
+    `weightedAPYsCalculator Not implemented ${coinDistribution} ${strategyAllocations} ${strategyAPYs}`,
   )
 }

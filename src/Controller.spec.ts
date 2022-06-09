@@ -1,26 +1,24 @@
 import BigNumber from 'bignumber.js'
+
 import { calculateAPY } from 'Controller'
-import {
-  APYType,
-  Coin,
-  CoinDistribution,
-  StrategyCoinAPY,
-  WeightedAPY,
-} from 'models'
-import { coinDistributionProvider } from 'providers/coinDistributionProvider'
+import { APYType, CoinDistribution, StrategyCoinAPY, WeightedAPY } from 'models'
+import { requestAllocationValidator } from 'services/validators/requestAllocationValidator'
 import { projectedAPYCalculator } from 'services/calculators/projectedAPYCalculator'
 import { strategyAPYCalculator } from 'services/calculators/strategyAPYCalculator'
 import { weightedAPYsCalculator } from 'services/calculators/weightedAPYsCalculator'
-import { requestAllocationValidator } from 'services/validators/requestAllocationValidator'
+import { coinDistributionProvider } from 'providers/coinDistributionProvider'
+
 import { mixedStrategyAllocation } from '__tests__/utils'
+
+jest.mock('services/validators/requestAllocationValidator')
+jest.mock('services/calculators/projectedAPYCalculator')
+jest.mock('services/calculators/strategyAPYCalculator')
+jest.mock('services/calculators/weightedAPYsCalculator')
+jest.mock('providers/coinDistributionProvider')
 
 describe('APY Calculation Controller', () => {
   beforeEach(() => {
-    jest.mock('services/validators/requestAllocationValidator')
-    jest.mock('services/calculators/projectedAPYCalculator')
-    jest.mock('services/calculators/strategyAPYCalculator')
-    jest.mock('services/calculators/weightedAPYsCalculator')
-    jest.mock('services/providers/coinDistributionProvider')
+    jest.clearAllMocks()
   })
 
   it('it should call request allocation validator with strategy coin allocation', () => {
@@ -32,7 +30,7 @@ describe('APY Calculation Controller', () => {
   })
 
   it('it should throw validation error if request allocation validator fails', () => {
-    jest.mock('services/validators/requestAllocationValidator', () => {
+    ;(requestAllocationValidator as jest.Mock).mockImplementationOnce(() => {
       throw Error('validation error')
     })
     expect(() => calculateAPY(mixedStrategyAllocation)).toThrow(
@@ -40,12 +38,10 @@ describe('APY Calculation Controller', () => {
     )
   })
 
-  it('it should call coin distribution provider for available coins', () => {
-    const allCoins = Object.values(Coin)
-
+  it('it should call coin distribution provider', () => {
     calculateAPY(mixedStrategyAllocation)
 
-    expect(coinDistributionProvider).toHaveBeenCalledTimes(allCoins.length)
+    expect(coinDistributionProvider).toHaveBeenCalledTimes(1)
   })
 
   it('it should call strategy APY calculator for each of allocated coin/strategy and for each APY types', () => {
@@ -57,8 +53,8 @@ describe('APY Calculation Controller', () => {
       mixedStrategyAllocation.length * allAPYTypes.length,
     )
     mixedStrategyAllocation.forEach((allocation) => {
-      allAPYTypes.forEach((type) => {
-        expect(strategyAPYCalculator).toHaveBeenCalledWith(allocation, type)
+      allAPYTypes.forEach((APYType) => {
+        expect(strategyAPYCalculator).toHaveBeenCalledWith(allocation, APYType)
       })
     })
   })
@@ -89,16 +85,26 @@ describe('APY Calculation Controller', () => {
     )[0]
 
     expect(projectedAPYCalculator).toHaveBeenCalledTimes(1)
-    expect(weightedAPYsCalculator).toHaveBeenCalledWith(weightedAPYs)
+    expect(projectedAPYCalculator).toHaveBeenCalledWith(weightedAPYs)
   })
 
   it('it should return the result of projectedAPY calculator', () => {
-    const result = calculateAPY(mixedStrategyAllocation)
+    const { projectedAPY } = calculateAPY(mixedStrategyAllocation)
 
-    const projectedAPY = (projectedAPYCalculator as jest.Mock).mock.results.map(
-      ({ value }) => value as BigNumber,
-    )[0]
+    const projectedAPYCallResult = (
+      projectedAPYCalculator as jest.Mock
+    ).mock.results.map(({ value }) => value as BigNumber)[0]
 
-    expect(result).toBe(projectedAPY)
+    expect(projectedAPY).toBe(projectedAPYCallResult)
+  })
+
+  it('it should return the result of weighted APYs calculator', () => {
+    const { weightedAPYs } = calculateAPY(mixedStrategyAllocation)
+
+    const weightedAPYsCallResult = (
+      weightedAPYsCalculator as jest.Mock
+    ).mock.results.map(({ value }) => value as WeightedAPY[])[0]
+
+    expect(weightedAPYs).toBe(weightedAPYsCallResult)
   })
 })

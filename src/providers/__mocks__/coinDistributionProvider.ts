@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import { Coin, CoinDistribution } from 'models'
 
-export const coinDistributionProvider = (): CoinDistribution[] => {
+export const coinDistributionProvider = jest.fn((): CoinDistribution[] => {
   return [
     {
       coin: Coin.DAI,
@@ -16,4 +16,4 @@ export const coinDistributionProvider = (): CoinDistribution[] => {
       amount: new BigNumber('20'),
     },
   ]
-}
+})
