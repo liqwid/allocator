@@ -20,6 +20,7 @@ module.exports = {
     semi: ['error', 'never'],
     quotes: ['error', 'single'],
     'no-multi-spaces': 'error',
+    '@typescript-eslint/no-non-null-assertion': 'off',
     'prettier/prettier': [
       'error',
       {
