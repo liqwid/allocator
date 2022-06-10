@@ -68,7 +68,7 @@ describe('APY Calculation service', () => {
     const { projectedAPY, weightedAPYs } = calculateAPY(
       convexStrategyAllocation,
     )
-    expect(new BigNumber('3.25')).toEqual(projectedAPY.decimalPlaces(2))
+    expect(new BigNumber('2.55')).toEqual(projectedAPY.decimalPlaces(2))
 
     const { Aave, Compound, Convex } = pipe(
       groupBy('strategy'),
@@ -83,11 +83,11 @@ describe('APY Calculation service', () => {
     expect(new BigNumber('0')).toEqual(Compound[Coin.USDC].APY.decimalPlaces(2))
     expect(new BigNumber('0')).toEqual(Compound[Coin.USDT].APY.decimalPlaces(2))
 
-    expect(new BigNumber('0.85')).toEqual(Convex[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0.85')).toEqual(
+    expect(new BigNumber('0.88')).toEqual(Convex[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('1.08')).toEqual(
       Convex[Coin.USDC].APY.decimalPlaces(2),
     )
-    expect(new BigNumber('0.85')).toEqual(
+    expect(new BigNumber('0.59')).toEqual(
       Convex[Coin.USDT].APY.decimalPlaces(2),
     )
   })
@@ -115,11 +115,11 @@ describe('APY Calculation service', () => {
       Compound[Coin.USDT].APY.decimalPlaces(2),
     )
 
-    expect(new BigNumber('0.33')).toEqual(Convex[Coin.DAI].APY.decimalPlaces(2))
-    expect(new BigNumber('0.33')).toEqual(
+    expect(new BigNumber('0.44')).toEqual(Convex[Coin.DAI].APY.decimalPlaces(2))
+    expect(new BigNumber('0.43')).toEqual(
       Convex[Coin.USDC].APY.decimalPlaces(2),
     )
-    expect(new BigNumber('0.33')).toEqual(
+    expect(new BigNumber('0.11')).toEqual(
       Convex[Coin.USDT].APY.decimalPlaces(2),
     )
   })

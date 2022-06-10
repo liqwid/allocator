@@ -19,9 +19,9 @@ const amounts: Map<APYType, Map<Coin, string>> = new Map([
   [
     APYType.Base,
     new Map([
-      [Coin.DAI, '0.0164'],
-      [Coin.USDC, '0.0104'],
-      [Coin.USDT, '0.018'],
+      [Coin.DAI, '1.64'],
+      [Coin.USDC, '1.04'],
+      [Coin.USDT, '1.8'],
     ]),
   ],
 ])

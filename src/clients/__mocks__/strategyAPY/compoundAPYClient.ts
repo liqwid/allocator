@@ -14,17 +14,17 @@ const amounts: Map<APYType, Map<Coin, string>> = new Map([
   [
     APYType.Reward,
     new Map([
-      [Coin.DAI, '0.0069'],
-      [Coin.USDC, '0.0041'],
-      [Coin.USDT, '0.0012'],
+      [Coin.DAI, '0.69'],
+      [Coin.USDC, '0.41'],
+      [Coin.USDT, '0.12'],
     ]),
   ],
   [
     APYType.Base,
     new Map([
-      [Coin.DAI, '0.014'],
-      [Coin.USDC, '0.0173'],
-      [Coin.USDT, '0.0213'],
+      [Coin.DAI, '1.14'],
+      [Coin.USDC, '0.73'],
+      [Coin.USDT, '2.13'],
     ]),
   ],
 ])
