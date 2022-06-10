@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "lint": "eslint ./src --ext .ts"
+    "lint": "eslint ./src --ext .ts",
+    "start": "node ./dist/index.js"
   },
   "keywords": [],
   "author": "Tony Popov",
@@ -27,7 +28,12 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
+    "@types/minimist": "^1.2.2",
     "bignumber.js": "^9.0.2",
-    "lodash": "^4.17.21"
+    "csv-parser": "^3.0.0",
+    "lodash": "^4.17.21",
+    "minimist": "^1.2.6",
+    "ts-node": "^10.8.1",
+    "tsconfig-paths": "^4.0.0"
   }
 }
