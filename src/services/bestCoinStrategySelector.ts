@@ -1,5 +1,5 @@
 import { Coin, Strategy } from 'models'
 
-export const selectBestCoinStrategy = (coin: Coin): Strategy => {
+export const bestCoinStrategySelector = (coin: Coin): Strategy => {
   throw Error(`selectBestCoinStrategy not implemented ${coin}`)
 }

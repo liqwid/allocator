@@ -1,11 +1,11 @@
 import BigNumber from 'bignumber.js'
 import { allCoins, allStrategies } from 'models'
 import { BestAPYResult } from 'models/BestAPYResult'
-import { selectBestCoinStrategy } from 'services/selectBestCoinStrategy'
+import { bestCoinStrategySelector } from 'services/bestCoinStrategySelector'
 
 export const getBestAPY = (): BestAPYResult => {
   const allocation = allCoins.flatMap((coin) => {
-    const bestStrategy = selectBestCoinStrategy(coin)
+    const bestStrategy = bestCoinStrategySelector(coin)
     return allStrategies.map((strategy) => ({
       coin,
       strategy,
