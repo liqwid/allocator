@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 
-import { calculateAPY } from 'Controller'
+import { calculateAPY } from 'APYCalculationController'
 import {
   allAPYTypes,
   BoostMultiplier,

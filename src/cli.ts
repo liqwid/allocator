@@ -1,18 +1,22 @@
 import { allocationCsvParser } from 'cli/allocationCsvParser'
-import { calculateAPY } from 'Controller'
-import { printResults } from 'cli/printResults'
+import { calculateAPY } from 'APYCalculationController'
+import { printAPYResults } from 'cli/printAPYResults'
 import { readAllocationsFile } from 'cli/readAllocationsFile'
 import { AllocatorMode, getMode } from 'cli/AllocatorMode'
+import { getBestAPY } from 'BestAPYController'
+import { printAllocationResult } from 'cli/printAllocationResults'
 
 const determineBestAPY = () => {
-  throw Error('auto allocation not implemented')
+  const { APYResult: APYResults, allocation } = getBestAPY()
+  printAllocationResult(allocation)
+  printAPYResults(APYResults)
 }
 
 const calculateAllocationAPY = () => {
   const file = readAllocationsFile()
   const allocation = allocationCsvParser(file)
   const results = calculateAPY(allocation)
-  printResults(results)
+  printAPYResults(results)
 }
 
 const mode = getMode()

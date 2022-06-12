@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import { keyBy, groupBy, pipe, mapValues } from 'lodash/fp'
 
-import { calculateAPY } from 'Controller'
+import { calculateAPY } from 'APYCalculationController'
 import { Coin, WeightedAPY } from 'models'
 import {
   aaveStrategyAllocation,
