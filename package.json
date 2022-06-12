@@ -7,7 +7,7 @@
     "build": "tsc",
     "test": "jest",
     "lint": "eslint ./src --ext .ts",
-    "start": "ts-node ./dist/index.js"
+    "start:cli": "ts-node ./src/cli.ts"
   },
   "keywords": [],
   "author": "Tony Popov",
