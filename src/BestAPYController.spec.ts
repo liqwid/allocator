@@ -1,9 +1,8 @@
 import { getBestAPY } from 'BestAPYController'
-import { allCoins, Coin, Strategy } from 'models'
+import { allCoins, allStrategies, Coin, CoinAllocation, Strategy } from 'models'
 import { selectBestCoinStrategy } from 'services/selectBestCoinStrategy'
 import { groupBy, keyBy, mapValues, pipe } from 'lodash/fp'
 import BigNumber from 'bignumber.js'
-import { removeItemAtIndex } from '__tests__/utils'
 
 jest.mock('services/selectBestCoinStrategy')
 
@@ -26,7 +25,7 @@ describe('Best APY Controller', () => {
 
     const groupedAllocation = pipe(
       groupBy('coin'),
-      mapValues(keyBy('strategy')),
+      mapValues(keyBy<CoinAllocation>('strategy')),
     )(allocation)
 
     const coins = (
@@ -40,14 +39,17 @@ describe('Best APY Controller', () => {
     coins.forEach((coin, index) => {
       const selectedStrategy = strategies[index]
 
-      expect(groupedAllocation[coin][selectedStrategy]).toEqual(
+      expect(groupedAllocation[coin][selectedStrategy].percentage).toEqual(
         new BigNumber('100'),
       )
-      removeItemAtIndex(index, strategies).forEach((otherStrategy) => {
-        expect(groupedAllocation[coin][otherStrategy]).toEqual(
-          new BigNumber('0'),
-        )
-      })
+
+      allStrategies
+        .filter((strategy) => strategy != selectedStrategy)
+        .forEach((otherStrategy) => {
+          expect(groupedAllocation[coin][otherStrategy].percentage).toEqual(
+            new BigNumber('0'),
+          )
+        })
     })
   })
 })

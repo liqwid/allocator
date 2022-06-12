@@ -7,7 +7,10 @@ import { getBestAPY } from 'BestAPYController'
 import { printAllocationResult } from 'cli/printAllocationResults'
 
 const determineBestAPY = () => {
-  const { APYResult: APYResults, allocation } = getBestAPY()
+  const { allocation } = getBestAPY()
+
+  const APYResults = calculateAPY(allocation)
+
   printAllocationResult(allocation)
   printAPYResults(APYResults)
 }
@@ -15,7 +18,9 @@ const determineBestAPY = () => {
 const calculateAllocationAPY = () => {
   const file = readAllocationsFile()
   const allocation = allocationCsvParser(file)
+
   const results = calculateAPY(allocation)
+
   printAPYResults(results)
 }
 
