@@ -1,10 +1,10 @@
 import { getBestAPY } from 'BestAPYController'
 import { allCoins, allStrategies, Coin, CoinAllocation, Strategy } from 'models'
-import { bestCoinStrategySelector } from 'services/selectBestCoinStrategy'
+import { bestCoinStrategySelector } from 'services/bestCoinStrategySelector'
 import { groupBy, keyBy, mapValues, pipe } from 'lodash/fp'
 import BigNumber from 'bignumber.js'
 
-jest.mock('services/selectBestCoinStrategy')
+jest.mock('services/bestCoinStrategySelector')
 
 describe('Best APY Controller', () => {
   beforeEach(() => {

@@ -4,7 +4,7 @@ import { allCoins, allStrategies, CoinAllocation } from 'models'
 export const printAllocationResult = (allocation: CoinAllocation[]): void => {
   const groupedAllocation = pipe(
     groupBy('coin'),
-    mapValues(keyBy('strategy')),
+    mapValues(keyBy<CoinAllocation>('strategy')),
   )(allocation)
 
   console.log('\nALLOCATION\n')
@@ -13,7 +13,9 @@ export const printAllocationResult = (allocation: CoinAllocation[]): void => {
 
   allCoins.forEach((coin) => {
     const coins = groupedAllocation[coin]
-    const allocations = allStrategies.map((strategy) => coins[strategy])
+    const allocations = allStrategies.map(
+      (strategy) => `${coins[strategy].percentage}%`,
+    )
     console.log(`${coin}, ${allocations.join(', ')}`)
   })
 

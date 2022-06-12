@@ -11,7 +11,7 @@ describe('Best APY allocation service', () => {
     const APYResult = calculateAPY(allocation)
 
     expect(APYResult.projectedAPY.decimalPlaces(2)).toEqual(
-      new BigNumber('3.38'),
+      new BigNumber('3.37'),
     )
 
     const { Aave, Compound, Convex } = pipe(
